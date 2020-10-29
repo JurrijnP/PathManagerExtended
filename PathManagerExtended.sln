@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathManagerExtended", "PathManagerExtended\PathManagerExtended.csproj", "{A5044428-DE3A-4985-AA7A-ED83A0903926}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5044428-DE3A-4985-AA7A-ED83A0903926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5044428-DE3A-4985-AA7A-ED83A0903926}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5044428-DE3A-4985-AA7A-ED83A0903926}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5044428-DE3A-4985-AA7A-ED83A0903926}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		BuildVersion_ConfigurationName = Any
+		BuildVersion_AssemblyInfoFilename = PathManagerExtended\Properties\AssemblyInfo.cs
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_BuildVersioningStyle = None.None.None.Increment
+		BuildVersion_StartDate = 2000/1/1
+		SolutionGuid = {5A221B90-A579-4499-8656-D4624C4A4DE6}
+	EndGlobalSection
+EndGlobal
