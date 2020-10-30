@@ -15,6 +15,8 @@ namespace PathManagerExtended.Tool
 
         public ushort HoveredNodeId { get; private set; } = 0;
         public ushort HoveredSegmentId { get; private set; } = 0;
+        public List<ushort> SelectedSegmentIDs = new List<ushort> { };
+        public List<ushort> SelectedNodeIDs = new List<ushort> { };
         protected bool IsHover => (HoveredSegmentId != 0 || HoveredNodeId != 0);
 
         protected bool HoverValid => PathManagerExtendedTool.MouseRayValid && IsHover;
@@ -71,30 +73,84 @@ namespace PathManagerExtended.Tool
             {
                 if (HoveredNodeId != 0)
                 {
-                    //Tool.SetNode(HoveredNodeId);
-                    //return;
+                    if (PathManagerExtendedTool.ShiftIsPressed)
+                    {
+                        if (SelectedNodeIDs.Contains(HoveredNodeId))
+                            SelectedNodeIDs.Remove(HoveredNodeId);
+                        else
+                            SelectedNodeIDs.Add(HoveredNodeId);
+                    }
+                    else
+                    {
+                        //Tool.SetNode(HoveredNodeId);
+                        //Tool.SetMode(ToolType.EditNote);
+                        return;
+                    }
                 }
                 if (HoveredSegmentId != 0)
                 {
-                    Tool.SetSegment(HoveredSegmentId);
-                    Tool.SetMode(ToolType.SelectLane);
-                    return;
+                    if (PathManagerExtendedTool.ShiftIsPressed)
+                    {
+                        if (SelectedSegmentIDs.Contains(HoveredSegmentId))
+                            SelectedSegmentIDs.Remove(HoveredSegmentId);
+                        else
+                            SelectedSegmentIDs.Add(HoveredSegmentId);
+                    } else
+                    {
+                        Tool.SetSegment(HoveredSegmentId);
+                        Tool.SetMode(ToolType.SelectLane);
+                        return;
+                    }
                 }
             }
         }
-        public override void OnSecondaryMouseClicked() => Tool.DisableTool();
+        public override void OnSecondaryMouseClicked()
+        {
+            Log.Debug("SelectInstanceTool.OnSecondaryMouseClicked()");
+            if (SelectedNodeIDs.Count > 0 || SelectedSegmentIDs.Count > 0)
+            {
+                SelectedNodeIDs.Clear();
+                SelectedSegmentIDs.Clear();
+            }
+            else
+            {
+                Tool.DisableTool();
+            }
+        }
 
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
+            for (int i = 0; i < SelectedSegmentIDs.Count; i++)
+            {
+                if (HoveredSegmentId == 0 || HoveredSegmentId != SelectedSegmentIDs[i])
+                    RenderUtil.RenderRawSegmentOverlay(cameraInfo, SelectedSegmentIDs[i], (SelectedSegmentIDs[i].ToSegment().Info.m_halfWidth - 2f), Colors.GameGreen, 0f, 0f, true);
+            }
+            for (int i = 0; i < SelectedNodeIDs.Count; i++)
+            {
+                if (HoveredNodeId == 0 || HoveredNodeId != SelectedNodeIDs[i])
+                    RenderUtil.DrawNodeCircle(cameraInfo, Colors.GameGreen, SelectedNodeIDs[i], true);
+            }
             if (HoverValid)
             {
                 if (HoveredSegmentId != 0)
                 {
-                    RenderUtil.RenderAutoCutSegmentOverlay(cameraInfo, HoveredSegmentId, Color.white, true);
+                    if (SelectedSegmentIDs.Contains(HoveredSegmentId))
+                        if (PathManagerExtendedTool.ShiftIsPressed)
+                            RenderUtil.RenderRawSegmentOverlay(cameraInfo, HoveredSegmentId, (HoveredSegmentId.ToSegment().Info.m_halfWidth - 2f), Colors.OrangeWeb, 0f, 0f, true);
+                        else
+                            RenderUtil.RenderRawSegmentOverlay(cameraInfo, HoveredSegmentId, (HoveredSegmentId.ToSegment().Info.m_halfWidth - 2f), Colors.GameGreen + new Color(0.15f, 0.15f, 0.15f, 0f), 0f, 0f, true);
+                    else
+                        RenderUtil.RenderRawSegmentOverlay(cameraInfo, HoveredSegmentId, (HoveredSegmentId.ToSegment().Info.m_halfWidth - 2f), Colors.GameBlue, 0f, 0f, true);
                 }
                 if (HoveredNodeId != 0)
                 {
-                    RenderUtil.DrawNodeCircle(cameraInfo, Color.white, HoveredNodeId, true);
+                    if (SelectedNodeIDs.Contains(HoveredNodeId))
+                        if (PathManagerExtendedTool.ShiftIsPressed)
+                            RenderUtil.DrawNodeCircle(cameraInfo, Colors.OrangeWeb, HoveredNodeId, true);
+                        else
+                            RenderUtil.DrawNodeCircle(cameraInfo, Colors.GameGreen + new Color(0.15f, 0.15f, 0.15f, 0f), HoveredNodeId, true);
+                    else
+                        RenderUtil.DrawNodeCircle(cameraInfo, Colors.GameBlue, HoveredNodeId, true);
                 }
             }
         }

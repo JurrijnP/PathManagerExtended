@@ -165,6 +165,17 @@ namespace PathManagerExtended.Util
             StartNode = false;
         }
 
+        public bool HasLane(uint laneID)
+        {
+            for (int i = 0; i < Lanes.Count; i++)
+            {
+                if (Lanes[i].LaneID == laneID)
+                    return true;
+            }
+
+            return false;
+        }
+
         public bool StartNode;
         public ushort SegmentID;
         public ref NetSegment Segment => ref SegmentID.ToSegment();

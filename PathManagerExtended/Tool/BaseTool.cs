@@ -24,6 +24,8 @@ namespace PathManagerExtended.Tool
 
         public virtual void OnMouseDown(Event e) { }
         public virtual void OnMouseDrag(Event e) { }
+
+        public virtual void OnKeyUp(Event e) { }
         public virtual void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
         public virtual void OnPrimaryMouseClicked(Event e) { }
         public virtual void OnSecondaryMouseClicked() { }
@@ -31,10 +33,11 @@ namespace PathManagerExtended.Tool
 
     public enum ToolType
     {
-        None            = 0x0,
-        SelectInstance  = 0x1,
-        SelectLane      = 0x2,
-        ModifyLane      = 0x4,
-        DragBezierPoint = 0x8,
+        None                    = 0x0,
+        SelectInstance          = 0x1,
+        SelectLane              = 0x2,
+        ModifyLane              = 0x4,
+        DragBezierPoint         = 0x8,
+        SelectMultipleInstances = 0x10,
     }
 }

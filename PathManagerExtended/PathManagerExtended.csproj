@@ -72,6 +72,7 @@
     <Compile Include="Tool\MainTool.cs" />
     <Compile Include="Tool\SelectInstanceTool.cs" />
     <Compile Include="Tool\SelectLaneTool.cs" />
+    <Compile Include="Tool\SelectMultipleInstance.cs" />
     <Compile Include="UI\DynamicButton.cs" />
     <Compile Include="UI\MainPanel.cs" />
     <Compile Include="UI\TabPanel.cs" />

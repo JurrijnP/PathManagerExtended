@@ -51,8 +51,14 @@ namespace PathManagerExtended.Util
         {
             if (segmentId == 0) return;
 
+            RenderRawSegmentOverlay(cameraInfo, segmentId, segmentId.ToSegment().Info.m_halfWidth, color, cutStart, cutEnd, alphaBlend);
+        }
+
+        public static void RenderRawSegmentOverlay(RenderManager.CameraInfo cameraInfo, ushort segmentId, float width, Color color, float cutStart, float cutEnd, bool alphaBlend = false)
+        {
+            if (segmentId == 0) return;
+
             ref NetSegment segment = ref segmentId.ToSegment();
-            float hw = segment.Info.m_halfWidth;
 
             NetNode[] nodeBuffer = Singleton<NetManager>.instance.m_nodes.m_buffer;
             bool IsMiddle(ushort nodeId) => (nodeBuffer[nodeId].m_flags & NetNode.Flags.Middle) != 0;
@@ -72,7 +78,7 @@ namespace PathManagerExtended.Util
                 out bezier.c
             );
 
-            bezier.Render(cameraInfo, color, hw, cutStart, cutEnd, alphaBlend);
+            bezier.Render(cameraInfo, color, width, cutStart, cutEnd, alphaBlend);
         }
 
         //public static void RenderLaneOverlay(RenderManager.CameraInfo cameraInfo, LaneData laneData, Color color, bool alphaBlend = false)
@@ -107,6 +113,59 @@ namespace PathManagerExtended.Util
                 position.y + 100f,
                 false,
                 alphaBlend);
+        }
+    }
+
+    public struct Colors
+    {
+        public static Color White
+        {
+            get
+            {
+                return new Color(1f, 1f, 1f, 1f);
+            }
+        }
+        public static Color OrangeWeb
+        {
+            get
+            {
+                return new Color(1f, 0.65f, 0f, 1f);
+            }
+        }
+        public static Color NeonBlue
+        {
+            get
+            {
+                return new Color(0.27f, 0.4f, 1f, 1f);
+            }
+        }
+        public static Color SteelPink
+        {
+            get
+            {
+                return new Color(0.8f, 0.2f, 0.8f, 1f);
+            }
+        }
+        public static Color YellowGreen
+        {
+            get
+            {
+                return new Color(0.6f, 0.8f, 0.2f, 1f);
+            }
+        }
+        public static Color GameBlue
+        {
+            get
+            {
+                return new Color(0.0f, 0.71f, 1f, 1f);
+            }
+        }
+        public static Color GameGreen
+        {
+            get
+            {
+                return new Color(0.37f, 0.65f, 0f, 1f);
+            }
         }
     }
 }

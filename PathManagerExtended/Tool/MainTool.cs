@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace PathManagerExtended.Tool
 {
-    public class PathManagerExtendedTool : DefaultTool
+    public class PathManagerExtendedTool : ToolBase
     {
         public static readonly SavedInputKey ActivationShortcut = new SavedInputKey("ActivationShortcut", nameof(PathManagerExtended), SavedInputKey.Encode(KeyCode.P, true, false, false), true);
 
@@ -26,6 +26,8 @@ namespace PathManagerExtended.Tool
         private Dictionary<ToolType, BaseTool> Tools { get; set; } = new Dictionary<ToolType, BaseTool>();
 
         public bool ToolEnabled => enabled;
+
+        public static SegmentData[] segmentBuffer = new SegmentData[NetManager.MAX_SEGMENT_COUNT];
         public SegmentData SegmentInstance { get; private set; } = new SegmentData();
         public LaneData LaneInstance { get; private set; } = new LaneData(0);
 
@@ -44,6 +46,7 @@ namespace PathManagerExtended.Tool
             {
                 { ToolType.SelectInstance, new SelectInstanceTool() },
                 { ToolType.SelectLane, new SelectLaneTool() },
+                { ToolType.SelectMultipleInstances, new SelectMultipleInstancesTool() },
                 // More here...
             };
 
@@ -204,6 +207,9 @@ namespace PathManagerExtended.Tool
                     break;
                 case EventType.MouseUp when MouseRayValid && e.button == 1:
                     CurrentTool.OnSecondaryMouseClicked();
+                    break;
+                case EventType.KeyUp:
+                    CurrentTool.OnKeyUp(e);
                     break;
             }
         }
