@@ -176,7 +176,7 @@ namespace PathManagerExtended.Tool
             base.RenderOverlay(cameraInfo);
         }
 
-        public static new bool RayCast(RaycastInput input, out RaycastOutput output) => ToolBase.RayCast(input, out output);
+        public static bool RayCast(RaycastInput input, out RaycastOutput output) => ToolBase.RayCast(input, out output);
 
         #endregion
 
